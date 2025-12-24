@@ -1,0 +1,49 @@
+<article class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 transform hover:-translate-y-2">
+  {{ if .Params.featured_image }}
+    {{ $image := .Resources.GetMatch .Params.featured_image }}
+    {{ if $image }}
+      <a href="{{ .Permalink }}" class="block">
+        <img src="{{ $image.RelPermalink }}" 
+             alt="{{ .Title }}"
+             class="w-full h-48 object-cover">
+      </a>
+    {{ end }}
+  {{ end }}
+  <div class="p-6">
+    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">
+        {{ .Date.Format "January 2, 2006" }}
+      </time>
+      {{ if .Params.tags }}
+        <span class="mx-2">•</span>
+        <div class="flex flex-wrap gap-2">
+          {{ range first 3 .Params.tags }}
+            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">{{ . }}</span>
+          {{ end }}
+        </div>
+      {{ end }}
+    </div>
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+      <a href="{{ .Permalink }}" class="hover:text-gray-600 dark:hover:text-gray-400 transition-colors">
+        {{ .Title }}
+      </a>
+    </h2>
+    {{ if .Description }}
+      <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+        {{ .Description }}
+      </p>
+    {{ else }}
+      <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+        {{ .Summary | truncate 150 }}
+      </p>
+    {{ end }}
+    <a href="{{ .Permalink }}" 
+       class="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">
+      Read more
+      <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </a>
+  </div>
+</article>
+

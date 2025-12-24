@@ -1,0 +1,133 @@
+{{ define "main" }}
+  {{/* Hero Section */}}
+  <section class="hero-section min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden">
+    {{/* Animated background pattern */}}
+    <div class="absolute inset-0 opacity-5 dark:opacity-10">
+      <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0); background-size: 40px 40px;"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center animate-fade-in">
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+          Xavi Miranda Sánchez
+        </h1>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-700 dark:text-gray-300 mb-3">
+          Platform Engineer &<br/>
+          Cloud Specialist
+        </h2>
+        <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400 mb-6">
+          Based in Barcelona, Spain
+        </p>
+        <p class="text-xl sm:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          former <span class="font-bold text-blue-600 dark:text-blue-400">SysOps</span> also interested in <span class="font-bold text-blue-600 dark:text-blue-400">development</span>. Mixing the best of both worlds got me into <span class="font-bold text-blue-600 dark:text-blue-400">DevOps</span>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {{/* Specializations Section */}}
+  <section class="py-32 bg-white dark:bg-gray-900 overflow-hidden">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-4xl sm:text-5xl font-bold text-center text-gray-900 dark:text-gray-100 mb-32">
+        What do I do?
+      </h2>
+      
+      <div class="space-y-48">
+        
+        {{/* Row 1: Infrastructure as Code - Text Centered, Image Right */}}
+        <div class="flex flex-col md:flex-row items-center gap-12 md:gap-32 slide-in-left fade-in-on-scroll">
+          <div class="w-full md:w-1/2 flex flex-col items-center text-center">
+            <div class="w-4/5 mx-auto">
+              <h3 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6">Infrastructure as Code</h3>
+              <p class="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+                Automating infrastructure deployment and management using modern IaC tools and practices.
+              </p>
+            </div>
+          </div>
+          <div class="w-full md:w-1/2 flex justify-center">
+            <img src="/images/infrastructure-as-code.png" alt="Infrastructure as Code" class="w-full max-w-[300px] h-auto rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 object-cover block">
+          </div>
+        </div>
+
+        {{/* Row 2: Pipelines - Image Left, Text Centered */}}
+        <div class="flex flex-col md:flex-row items-center gap-12 md:gap-32 slide-in-right fade-in-on-scroll">
+          <div class="w-full md:w-1/2 flex justify-center order-2 md:order-1">
+            <img src="/images/pipelines.png" alt="Pipelines" class="w-full max-w-[300px] h-auto rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 object-cover block">
+          </div>
+          <div class="w-full md:w-1/2 flex flex-col items-center text-center order-1 md:order-2">
+            <div class="w-4/5 mx-auto">
+              <h3 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6">Pipelines</h3>
+              <p class="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+                Helping developers to ship code faster and with confidence leveraging CI/CD pipelines.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {{/* Row 3: Kubernetes - Text Centered, Image Right */}}
+        <div class="flex flex-col md:flex-row items-center gap-12 md:gap-32 slide-in-left fade-in-on-scroll">
+          <div class="w-full md:w-1/2 flex flex-col items-center text-center">
+            <div class="w-4/5 mx-auto">
+              <h3 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6">Kubernetes</h3>
+              <p class="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+                Designing and managing containerized applications with Kubernetes for high availability and scalability.
+              </p>
+            </div>
+          </div>
+          <div class="w-full md:w-1/2 flex justify-center">
+            <img src="/images/kubernetes.png" alt="Kubernetes" class="w-full max-w-[300px] h-auto rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 object-cover block">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {{/* Recent Content Section */}}
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-20 mt-64">
+    {{/* Recent Blog Posts */}}
+    {{ $recentPosts := where .Site.RegularPages "Section" "blog" | first (.Site.Params.homepage.recent_posts_count | default 5) }}
+    {{ if $recentPosts }}
+      <section class="mb-20 fade-in-on-scroll">
+        <h2 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-12 text-center">Recent Posts</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {{ range $recentPosts }}
+            {{ partial "post-card.html" . }}
+          {{ end }}
+        </div>
+        <div class="text-center mt-12">
+          <a href="{{ "/blog/" | relURL }}" 
+             class="inline-flex items-center px-8 py-4 bg-blue-600 dark:bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
+            View All Posts
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      </section>
+    {{ end }}
+
+    {{/* Featured Projects */}}
+    {{ $allProjects := where .Site.RegularPages "Section" "projects" }}
+    {{ $featuredProjects := where $allProjects ".Params.featured" true | first 3 }}
+    {{ if and $allProjects $featuredProjects }}
+      <section class="fade-in-on-scroll">
+        <h2 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-12 text-center">Featured Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {{ range $featuredProjects }}
+            {{ partial "project-card.html" . }}
+          {{ end }}
+        </div>
+        <div class="text-center mt-12">
+          <a href="{{ "/projects/" | relURL }}" 
+             class="inline-flex items-center px-8 py-4 bg-blue-600 dark:bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
+            View All Projects
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      </section>
+    {{ end }}
+  </div>
+{{ end }}

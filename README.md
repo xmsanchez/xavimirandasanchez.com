@@ -1,6 +1,6 @@
-# Xavi Miranda Sánchez - Personal Portfolio
+# Xavi Miranda Sánchez
 
-Personal portfolio and blog website built with Hugo and Tailwind CSS.
+Personal blog built with Hugo and vibe-coded using Cursor.
 
 ## Tech Stack
 
@@ -126,8 +126,3 @@ The site is automatically deployed to GitHub Pages via GitHub Actions when chang
 ## License
 
 All rights reserved. © 2024 Xavi Miranda Sánchez
-
-# xavimirandasanchez.com
-# xavimirandasanchez.com
-# xavimirandasanchez.com
-# xavimirandasanchez.com

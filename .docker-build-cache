@@ -1,0 +1,5 @@
+# Build the image once with:
+# docker build -t xavi-portfolio-hugo:latest .
+#
+# Then docker-compose will use the cached image instead of rebuilding
+

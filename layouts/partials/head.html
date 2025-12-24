@@ -1,0 +1,68 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  {{ $title := .Title }}
+  {{ if eq $title "" }}
+    {{ $title = .Site.Title }}
+  {{ else }}
+    {{ $title = printf "%s | %s" $title .Site.Title }}
+  {{ end }}
+  
+  <title>{{ $title }}</title>
+  
+  {{ $description := .Description }}
+  {{ if eq $description "" }}
+    {{ $description = .Site.Params.bio }}
+  {{ end }}
+  <meta name="description" content="{{ $description }}">
+  
+  {{ if .Keywords }}
+    <meta name="keywords" content="{{ delimit .Keywords ", " }}">
+  {{ end }}
+  
+  {{ if .Params.author }}
+    <meta name="author" content="{{ .Params.author }}">
+  {{ else }}
+    <meta name="author" content="{{ .Site.Params.author }}">
+  {{ end }}
+  
+  {{/* Open Graph / Facebook */}}
+  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:title" content="{{ $title }}">
+  <meta property="og:description" content="{{ $description }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:site_name" content="{{ .Site.Title }}">
+  {{ if .Params.og_image }}
+    {{ $ogImage := .Resources.GetMatch .Params.og_image }}
+    {{ if $ogImage }}
+      <meta property="og:image" content="{{ $ogImage.Permalink }}">
+    {{ end }}
+  {{ end }}
+  
+  {{/* Twitter Card */}}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ $title }}">
+  <meta name="twitter:description" content="{{ $description }}">
+  
+  {{/* Preconnect to external domains */}}
+  <link rel="preconnect" href="https://giscus.app">
+  <link rel="dns-prefetch" href="https://giscus.app">
+  
+  {{/* CSS - Use pre-built CSS from static directory */}}
+  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+  
+  {{/* Dark mode script - inline to prevent flash */}}
+  <script>
+    (function() {
+      const theme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldUseDark = theme === 'dark' || (!theme && {{ if .Site.Params.theme.dark_mode_default }}true{{ else }}prefersDark{{ end }});
+      if (shouldUseDark) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+

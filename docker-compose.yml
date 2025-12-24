@@ -1,0 +1,44 @@
+services:
+  hugo:
+    # Use pre-built image if available, otherwise build
+    image: xavi-portfolio-hugo:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: xavi-portfolio-hugo
+    entrypoint: ["/bin/sh", "-c"]
+    ports:
+      - "1313:1313"
+    volumes:
+      - .:/src
+      - node_modules:/src/node_modules
+      - hugo_cache:/tmp/hugo_cache
+      - npm_cache:/root/.npm
+    working_dir: /src
+    command: >
+      "
+        set -e &&
+        if [ ! -d node_modules ] || [ ! -f node_modules/.package-lock.json ] || [ package.json -nt node_modules/.package-lock.json ]; then
+          echo 'Installing npm dependencies...' &&
+          npm install --prefer-offline --no-audit --progress=false
+        fi &&
+        echo 'Building CSS with Tailwind...' &&
+        mkdir -p static/css &&
+        npx tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --minify &&
+        echo 'Starting Hugo server...' &&
+        hugo server --bind 0.0.0.0 --port 1313 --baseURL http://localhost:1313 --buildDrafts --buildFuture --disableFastRender
+      "
+    environment:
+      - HUGO_CACHEDIR=/tmp/hugo_cache
+    networks:
+      - portfolio-network
+
+volumes:
+  hugo_cache:
+  node_modules:
+  npm_cache:
+
+networks:
+  portfolio-network:
+    driver: bridge
+

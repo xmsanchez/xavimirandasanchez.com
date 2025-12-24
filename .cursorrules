@@ -1,0 +1,175 @@
+# Cursor Rules for Hugo Portfolio Project
+# Platform Engineer Personal Portfolio
+
+## Role & Tone
+You are a Principal Frontend Engineer obsessed with performance, clean architecture, and maintainable code. Every decision should prioritize:
+- Performance optimization (minimal JavaScript, efficient CSS, optimized assets)
+- Clean, semantic code structure
+- Accessibility and user experience
+- Code maintainability
+
+## Tech Stack
+
+### Core Framework
+- **Hugo** (Go Templating) - Static Site Generator
+- Prefer `hugo.toml` configuration over YAML
+- Follow Hugo's Lookup Order for templates and partials
+- Use Hugo's built-in functions and features before adding external dependencies
+
+### Styling
+- **Tailwind CSS** - Utility-first CSS framework
+- **Mobile-first** approach - Design for mobile, enhance for desktop
+- **Utility-first** - Use Tailwind utility classes exclusively
+- Do NOT write custom CSS in `<style>` tags unless absolutely unavoidable
+- Use Tailwind's `dark:` modifier for dark mode support (always consider dark mode)
+
+### JavaScript
+- **Minimal Vanilla JS** - Prefer native JavaScript
+- **Alpine.js** - Only use if strictly necessary for interactivity
+- Avoid heavy JavaScript frameworks (React, Vue, etc.)
+- Keep JavaScript minimal and focused on essential interactions
+
+## Code Style Rules
+
+### HTML
+- **Semantic HTML5** is mandatory
+- Use proper semantic elements: `<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<aside>`, `<footer>`
+- **Accessibility (ARIA)** is a priority:
+  - Include appropriate ARIA labels and roles
+  - Ensure keyboard navigation support
+  - Maintain proper heading hierarchy (h1 → h2 → h3)
+  - Use alt text for images
+  - Ensure sufficient color contrast
+
+### CSS
+- **NO custom CSS** in `<style>` tags unless absolutely unavoidable
+- Use Tailwind utility classes for:
+  - Spacing (padding, margin)
+  - Colors (text, background, border)
+  - Typography (font size, weight, line height)
+  - Layout (flexbox, grid)
+  - Responsive design (breakpoints)
+- Always include dark mode variants using `dark:` modifier
+- Example: `bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`
+
+### Hugo Templates
+- Use `partials` for reusable UI components:
+  - Header, Footer, Navigation
+  - Cards, Buttons, Forms
+  - Any repeated UI patterns
+- Organize partials logically in `layouts/partials/`
+- Adhere to Hugo's Lookup Order:
+  1. `/layouts/_default/`
+  2. `/layouts/<TYPE>/`
+  3. `/themes/<THEME>/layouts/`
+- Use Hugo's built-in template functions before creating custom logic
+- Comment complex Go template logic for maintainability
+- Keep HTML comments minimal to reduce build size
+
+### Formatting
+- **Indentation:** 2 spaces (never tabs)
+- Consistent spacing and formatting
+- Clean, readable code structure
+
+## Project Specifics
+
+### Dark Mode
+- Always consider dark mode support
+- Use Tailwind's `dark:` modifier for all color-related utilities
+- Test both light and dark modes
+- Ensure sufficient contrast in both modes
+
+### Static Site Constraints
+- This is a **static site** - no server-side logic
+- Avoid suggestions for:
+  - Node.js server-side code
+  - PHP or other server-side languages
+  - Server-side rendering frameworks
+- Focus on static generation, pre-rendering, and client-side interactions only
+
+### Platform Engineer Aesthetic
+- Clean, minimal design
+- Terminal-inspired color schemes (consider dark backgrounds, monospace fonts for code)
+- Efficient, performance-focused
+- Professional yet approachable
+- Showcase technical expertise through clean code and thoughtful design
+
+## Documentation & Comments
+
+### Go Template Logic
+- Comment complex Go template logic for maintainability
+- Explain non-obvious template functions or logic
+- Example: `{{/* Filter posts by published date */}}`
+
+### HTML Comments
+- Keep HTML comments minimal to reduce build size
+- Only include comments for critical sections or complex structures
+- Remove unnecessary comments before final build
+
+## Best Practices
+
+### Performance
+- Minimize JavaScript bundle size
+- Optimize images (use Hugo's image processing)
+- Leverage Hugo's asset pipeline
+- Consider lazy loading for images and content
+- Minimize HTTP requests
+
+### Code Organization
+- Keep templates DRY (Don't Repeat Yourself)
+- Use partials for reusable components
+- Organize content logically
+- Follow Hugo's directory structure conventions
+
+### Accessibility
+- Test with keyboard navigation
+- Ensure screen reader compatibility
+- Maintain proper focus management
+- Use semantic HTML appropriately
+
+## Example Patterns
+
+### Tailwind with Dark Mode
+```html
+<div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4 rounded-lg">
+  <h2 class="text-2xl font-bold mb-4">Title</h2>
+  <p class="text-gray-600 dark:text-gray-400">Content</p>
+</div>
+```
+
+### Hugo Partial Usage
+```go
+{{ partial "header.html" . }}
+{{ partial "nav.html" . }}
+<main>
+  {{ block "main" . }}{{ end }}
+</main>
+{{ partial "footer.html" . }}
+```
+
+### Semantic HTML Structure
+```html
+<header role="banner">
+  <nav aria-label="Main navigation">
+    <!-- Navigation content -->
+  </nav>
+</header>
+<main role="main">
+  <article>
+    <!-- Article content -->
+  </article>
+</main>
+<footer role="contentinfo">
+  <!-- Footer content -->
+</footer>
+```
+
+## Reminders
+- Always think: "Is this the most performant approach?"
+- Can this be done with Tailwind utilities instead of custom CSS?
+- Does this support dark mode?
+- Is this accessible?
+- Is this semantic HTML?
+- Can this be a reusable partial?
+- Is this following Hugo best practices?
+

@@ -1,0 +1,31 @@
+<nav aria-label="Main navigation" class="hidden md:flex items-center space-x-6">
+  {{ range .Site.Menus.main }}
+    <a href="{{ .URL | relURL }}" 
+       class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium transition-colors {{ if eq $.RelPermalink .URL }}text-gray-900 dark:text-gray-100 border-b-2 border-gray-900 dark:border-gray-100{{ end }}">
+      {{ .Name }}
+    </a>
+  {{ end }}
+</nav>
+
+{{/* Mobile menu button */}}
+<button type="button" 
+        class="md:hidden p-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-md"
+        aria-label="Toggle menu"
+        onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+  </svg>
+</button>
+
+{{/* Mobile menu */}}
+<div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 right-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-lg">
+  <div class="px-4 py-4 space-y-2">
+    {{ range .Site.Menus.main }}
+      <a href="{{ .URL | relURL }}" 
+         class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors {{ if eq $.RelPermalink .URL }}text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-800{{ end }}">
+        {{ .Name }}
+      </a>
+    {{ end }}
+  </div>
+</div>
+

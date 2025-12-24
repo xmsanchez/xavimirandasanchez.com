@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}" class="scroll-smooth">
+  {{ partial "head.html" . }}
+  <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+    {{ partial "header.html" . }}
+    <main role="main" class="min-h-screen">
+      {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "footer.html" . }}
+    {{ partial "dark-mode-toggle.html" . }}
+    <script src="{{ "js/dark-mode.js" | relURL }}"></script>
+    <script src="{{ "js/scroll-animations.js" | relURL }}"></script>
+  </body>
+</html>
+

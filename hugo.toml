@@ -1,0 +1,87 @@
+baseURL = "https://xmsanchez.github.io/xavimirandasanchez.com/"
+canonifyURLs = true
+relativeURLs = false
+languageCode = "en-us"
+title = "Xavi Miranda Sánchez | Platform Engineer"
+
+# Build settings
+buildDrafts = false
+buildFuture = false
+enableRobotsTXT = true
+enableGitInfo = false
+
+# Taxonomies
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+  tech = "tech"
+
+# Parameters (site-wide variables)
+[params]
+  # Author info
+  author = "Xavi Miranda Sánchez"
+  author_title = "Platform Engineer / Cloud Specialist / Senior DevOps Engineer"
+  bio = "I've worked as SysOps, SRE and DevOps Engineer. I'm specialized in Cloud Computing and Kubernetes, using tools like Terraform for infrastructure provisioning and python for automation."
+  location = "Barcelona, Cataluña, España"
+  
+  # Social links
+  [params.social]
+    github = "https://github.com/xmsanchez"
+    linkedin = "https://www.linkedin.com/in/xavi-miranda-s%C3%A1nchez/"
+    email = "mailto:xms.pixel@gmail.com"
+  
+  # Giscus configuration
+  [params.giscus]
+    repo = "xavimirandasanchez/xavimirandasanchez.github.io"
+    repo_id = "YOUR_REPO_ID"
+    category = "Announcements"
+    category_id = "YOUR_CATEGORY_ID"
+    mapping = "pathname"
+    reactions_enabled = true
+    emit_metadata = true
+    input_position = "bottom"
+    theme = "preferred_color_scheme"
+    lang = "en"
+  
+  # Homepage settings
+  [params.homepage]
+    hero_title = "Platform Engineer & Cloud Specialist"
+    hero_subtitle = "Specialized in Cloud Computing and Kubernetes. Building reliable infrastructure with Terraform, ArgoCD, and observability tools."
+    recent_posts_count = 5
+  
+  # Theme settings
+  [params.theme]
+    dark_mode_default = false
+    show_dark_mode_toggle = true
+
+# Menu (navigation)
+[[menu.main]]
+  identifier = "home"
+  name = "Home"
+  url = "/"
+  weight = 10
+
+[[menu.main]]
+  identifier = "blog"
+  name = "Blog"
+  url = "/blog/"
+  weight = 20
+
+[[menu.main]]
+  identifier = "projects"
+  name = "Projects"
+  url = "/projects/"
+  weight = 30
+
+[[menu.main]]
+  identifier = "about"
+  name = "About"
+  url = "/about/"
+  weight = 40
+
+# Output formats
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  page = ["HTML"]
+
