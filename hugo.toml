@@ -32,13 +32,14 @@ enableGitInfo = false
   
   # Giscus configuration
   [params.giscus]
-    repo = "xavimirandasanchez/xavimirandasanchez.github.io"
-    repo_id = "YOUR_REPO_ID"
-    category = "Announcements"
-    category_id = "YOUR_CATEGORY_ID"
+    repo = "xmsanchez/xavimirandasanchez.com"
+    repo_id = "R_kgDOQuNPaw"
+    category = "General"
+    category_id = "DIC_kwDOQuNPa84C0MjB"
     mapping = "pathname"
+    strict = false
     reactions_enabled = true
-    emit_metadata = true
+    emit_metadata = false
     input_position = "bottom"
     theme = "preferred_color_scheme"
     lang = "en"
