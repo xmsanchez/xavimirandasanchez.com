@@ -1,7 +1,7 @@
 +++
 title = "My new blog"
 description = "Starting a new blog in (almost) 2026"
-date = 2024-12-23T16:00:00Z
+date = 2025-12-23T16:00:00Z
 draft = false
 author = "Xavi Miranda Sánchez"
 tags = ["news"]
