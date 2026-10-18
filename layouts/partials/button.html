@@ -1,0 +1,5 @@
+<a href="{{ .href | relURL }}"
+   class="inline-flex items-center px-8 py-4 bg-blue-600 dark:bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors shadow-lg">
+  {{ .label }}
+  {{ partial "icon.html" (dict "name" "arrow" "class" "w-5 h-5 ml-2") }}
+</a>

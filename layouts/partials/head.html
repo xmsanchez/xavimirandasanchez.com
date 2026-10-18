@@ -1,68 +1,51 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
-  {{ $title := .Title }}
-  {{ if eq $title "" }}
-    {{ $title = .Site.Title }}
-  {{ else }}
-    {{ $title = printf "%s | %s" $title .Site.Title }}
-  {{ end }}
-  
+
+  {{ $title := site.Title }}
+  {{ if and .Title (not .IsHome) }}{{ $title = printf "%s | %s" .Title site.Title }}{{ end }}
+  {{ $description := .Description | default (cond .IsPage (.Summary | plainify | truncate 160) site.Params.bio) }}
+  {{ $isPost := and .IsPage (eq .Section "blog") }}
+
   <title>{{ $title }}</title>
-  
-  {{ $description := .Description }}
-  {{ if eq $description "" }}
-    {{ $description = .Site.Params.bio }}
-  {{ end }}
   <meta name="description" content="{{ $description }}">
-  
-  {{ if .Keywords }}
-    <meta name="keywords" content="{{ delimit .Keywords ", " }}">
+  <meta name="author" content="{{ .Params.author | default site.Params.author }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+  {{ range .AlternativeOutputFormats }}
+    <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .RelPermalink }}" title="{{ site.Title }}">
   {{ end }}
-  
-  {{ if .Params.author }}
-    <meta name="author" content="{{ .Params.author }}">
-  {{ else }}
-    <meta name="author" content="{{ .Site.Params.author }}">
-  {{ end }}
-  
-  {{/* Open Graph / Facebook */}}
-  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+
+  <meta property="og:type" content="{{ if $isPost }}article{{ else }}website{{ end }}">
   <meta property="og:title" content="{{ $title }}">
   <meta property="og:description" content="{{ $description }}">
   <meta property="og:url" content="{{ .Permalink }}">
-  <meta property="og:site_name" content="{{ .Site.Title }}">
-  {{ if .Params.og_image }}
-    {{ $ogImage := .Resources.GetMatch .Params.og_image }}
-    {{ if $ogImage }}
-      <meta property="og:image" content="{{ $ogImage.Permalink }}">
-    {{ end }}
+  <meta property="og:site_name" content="{{ site.Title }}">
+  {{ $ogImage := "" }}
+  {{ with .Params.og_image }}{{ with $.Resources.GetMatch . }}{{ $ogImage = .Permalink }}{{ end }}{{ end }}
+  {{ if $ogImage }}
+    <meta property="og:image" content="{{ $ogImage }}">
+    <meta name="twitter:image" content="{{ $ogImage }}">
   {{ end }}
-  
-  {{/* Twitter Card */}}
-  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:card" content="{{ if $ogImage }}summary_large_image{{ else }}summary{{ end }}">
   <meta name="twitter:title" content="{{ $title }}">
   <meta name="twitter:description" content="{{ $description }}">
-  
-  {{/* Preconnect to external domains */}}
-  <link rel="preconnect" href="https://giscus.app">
-  <link rel="dns-prefetch" href="https://giscus.app">
-  
-  {{/* CSS - Use pre-built CSS from static directory */}}
+
+  {{ if $isPost }}
+    <script type="application/ld+json">
+      {{- dict "@context" "https://schema.org" "@type" "BlogPosting" "headline" .Title "description" $description "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00") "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00") "mainEntityOfPage" .Permalink "author" (dict "@type" "Person" "name" (.Params.author | default site.Params.author)) | jsonify | safeJS -}}
+    </script>
+  {{ end }}
+
   <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
-  
-  {{/* Dark mode script - inline to prevent flash */}}
+
+  {{/* Inline to apply the theme before first paint and enable JS-only styles */}}
   <script>
     (function() {
-      const theme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const shouldUseDark = theme === 'dark' || (!theme && {{ if .Site.Params.theme.dark_mode_default }}true{{ else }}prefersDark{{ end }});
-      if (shouldUseDark) {
-        document.documentElement.classList.add('dark');
-      }
+      var root = document.documentElement;
+      root.classList.add('js');
+      var theme = localStorage.getItem('theme');
+      var dark = theme ? theme === 'dark' : {{ if site.Params.theme.dark_mode_default }}true{{ else }}window.matchMedia('(prefers-color-scheme: dark)').matches{{ end }};
+      if (dark) root.classList.add('dark');
     })();
   </script>
 </head>
-

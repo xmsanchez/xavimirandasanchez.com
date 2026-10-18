@@ -5,8 +5,6 @@ date = 2025-12-23T16:00:00Z
 draft = false
 author = "Xavi Miranda Sánchez"
 tags = ["news"]
-categories = ["Personal"]
-tech = ["hugo", "github-pages"]
 featured = true
 comments = true
 +++

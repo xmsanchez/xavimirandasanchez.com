@@ -2,9 +2,12 @@
   "name": "xavimirandasanchez-portfolio",
   "version": "1.0.0",
   "description": "Personal portfolio and blog website built with Hugo and Tailwind CSS",
+  "private": true,
   "scripts": {
-    "build": "hugo --minify",
-    "dev": "hugo server -D"
+    "css": "tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --minify",
+    "css:watch": "tailwindcss -i ./assets/css/main.css -o ./static/css/main.css --watch",
+    "build": "npm run css && hugo --minify",
+    "dev": "npm run css && (trap 'kill 0' EXIT; npm run css:watch & hugo server -D --noBuildLock)"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
@@ -12,4 +15,3 @@
     "tailwindcss": "^3.4.13"
   }
 }
-

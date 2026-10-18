@@ -1,7 +1,5 @@
 baseURL = "https://xavimirandasanchez.com/"
-canonifyURLs = true
-relativeURLs = false
-languageCode = "en-us"
+locale = "en-us"
 title = "Xavi Miranda Sánchez | Platform Engineer"
 
 # Build settings
@@ -10,19 +8,21 @@ buildFuture = false
 enableRobotsTXT = true
 enableGitInfo = false
 
-# Taxonomies
-[taxonomies]
-  tag = "tags"
-  category = "categories"
-  tech = "tech"
+# Tags are shown as badges only; no taxonomy/term pages are generated
+disableKinds = ["taxonomy", "term"]
+
+[markup.highlight]
+  style = "github-dark"
+
+[pagination]
+  pagerSize = 12
 
 # Parameters (site-wide variables)
 [params]
   # Author info
   author = "Xavi Miranda Sánchez"
-  author_title = "Platform Engineer / Cloud Specialist / Senior DevOps Engineer"
   bio = "I've worked as SysOps, SRE and DevOps Engineer. I'm specialized in Cloud Computing and Kubernetes, using tools like Terraform for infrastructure provisioning and python for automation."
-  location = "Barcelona, Cataluña, España"
+  location = "Barcelona, Spain"
   
   # Social links
   [params.social]
@@ -46,8 +46,6 @@ enableGitInfo = false
   
   # Homepage settings
   [params.homepage]
-    hero_title = "Platform Engineer & Cloud Specialist"
-    hero_subtitle = "Specialized in Cloud Computing and Kubernetes. Building reliable infrastructure with Terraform, ArgoCD, and observability tools."
     recent_posts_count = 5
   
   # Theme settings
@@ -84,5 +82,4 @@ enableGitInfo = false
 [outputs]
   home = ["HTML", "RSS"]
   section = ["HTML", "RSS"]
-  page = ["HTML"]
 

@@ -1,13 +1,44 @@
-<header role="banner" class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+{{ $page := . }}
+{{ $link := "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors" }}
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+  <div class="container">
     <div class="flex items-center justify-between h-16">
-      <div class="flex items-center">
-        <a href="{{ "/" | relURL }}" class="text-xl font-bold text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400 transition-colors">
-          {{ .Site.Params.author }}
-        </a>
+      <a href="{{ "/" | relURL }}" class="text-xl font-bold text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-400 transition-colors">
+        {{ site.Params.author }}
+      </a>
+
+      <div class="flex items-center gap-4">
+        <nav aria-label="Main navigation" class="hidden md:flex items-center space-x-6">
+          {{ range site.Menus.main }}
+            {{ $active := cond (eq .URL "/") $page.IsHome (hasPrefix $page.RelPermalink .URL) }}
+            <a href="{{ .URL | relURL }}" {{ if $active }}aria-current="page"{{ end }}
+               class="{{ $link }} font-medium {{ if $active }}border-b-2 border-gray-900 dark:border-gray-100{{ end }}">{{ .Name }}</a>
+          {{ end }}
+        </nav>
+
+        {{ if site.Params.theme.show_dark_mode_toggle }}
+          <button type="button" id="dark-mode-toggle" aria-label="Toggle dark mode"
+                  class="p-2 rounded-md {{ $link }}">
+            <span class="hidden dark:block">{{ partial "icon.html" (dict "name" "sun") }}</span>
+            <span class="block dark:hidden">{{ partial "icon.html" (dict "name" "moon") }}</span>
+          </button>
+        {{ end }}
+
+        <button type="button" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu"
+                class="md:hidden p-2 rounded-md {{ $link }}">
+          {{ partial "icon.html" (dict "name" "menu" "class" "w-6 h-6") }}
+        </button>
       </div>
-      {{ partial "navbar.html" . }}
     </div>
   </div>
-</header>
 
+  <nav id="mobile-menu" aria-label="Mobile navigation" class="hidden md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+    <div class="container py-4 space-y-2">
+      {{ range site.Menus.main }}
+        {{ $active := cond (eq .URL "/") $page.IsHome (hasPrefix $page.RelPermalink .URL) }}
+        <a href="{{ .URL | relURL }}" {{ if $active }}aria-current="page"{{ end }}
+           class="{{ $link }} block px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 {{ if $active }}bg-gray-100 dark:bg-gray-800{{ end }}">{{ .Name }}</a>
+      {{ end }}
+    </div>
+  </nav>
+</header>

@@ -1,46 +1,24 @@
 {{ define "main" }}
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="container py-12">
     <header class="mb-8">
       <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">{{ .Title }}</h1>
-      {{ if .Description }}
-        <p class="text-xl text-gray-600 dark:text-gray-400">{{ .Description }}</p>
-      {{ end }}
+      {{ with .Description }}<p class="text-xl text-gray-600 dark:text-gray-400">{{ . }}</p>{{ end }}
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {{ range .Pages }}
-        {{ if eq .Section "blog" }}
-          {{ partial "post-card.html" . }}
-        {{ else if eq .Section "projects" }}
-          {{ partial "project-card.html" . }}
-        {{ end }}
-      {{ end }}
-    </div>
+    {{ $paginator := .Paginate .RegularPages }}
+    {{ if $paginator.Pages }}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {{ range $paginator.Pages }}{{ partial "card.html" . }}{{ end }}
+      </div>
+    {{ end }}
 
-    {{/* Pagination */}}
-    {{ if .Paginator }}
-      {{ if gt .Paginator.TotalPages 1 }}
-        <nav class="mt-12 flex justify-center" aria-label="Pagination">
-          <div class="flex space-x-2">
-            {{ if .Paginator.HasPrev }}
-              <a href="{{ .Paginator.Prev.URL }}" 
-                 class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-                Previous
-              </a>
-            {{ end }}
-            <span class="px-4 py-2 text-gray-600 dark:text-gray-400">
-              Page {{ .Paginator.PageNumber }} of {{ .Paginator.TotalPages }}
-            </span>
-            {{ if .Paginator.HasNext }}
-              <a href="{{ .Paginator.Next.URL }}" 
-                 class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-                Next
-              </a>
-            {{ end }}
-          </div>
-        </nav>
-      {{ end }}
+    {{ if gt $paginator.TotalPages 1 }}
+      {{ $btn := "px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" }}
+      <nav class="mt-12 flex justify-center items-center gap-2" aria-label="Pagination">
+        {{ if $paginator.HasPrev }}<a href="{{ $paginator.Prev.URL }}" class="{{ $btn }}">Previous</a>{{ end }}
+        <span class="px-4 py-2 text-gray-600 dark:text-gray-400">Page {{ $paginator.PageNumber }} of {{ $paginator.TotalPages }}</span>
+        {{ if $paginator.HasNext }}<a href="{{ $paginator.Next.URL }}" class="{{ $btn }}">Next</a>{{ end }}
+      </nav>
     {{ end }}
   </div>
 {{ end }}
-
